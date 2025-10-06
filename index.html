@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bộ Công Cụ Thực Hành - Lãnh Đạo Khai Vấn (Ngày 1)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --color-orange: #FF9800;
+            --color-green: #009688;
+            --color-blue-light: #5C6BC0;
+            --color-blue-dark: #1a237e;
+        }
+        body {
+            font-family: 'Oswald', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .main-tab.active {
+            border-color: var(--color-orange);
+            background-color: var(--color-orange);
+            color: white;
+        }
+        .sub-tab.active {
+            background-color: white;
+            color: var(--color-blue-dark);
+            border-bottom-color: transparent;
+        }
+        .form-input {
+            border: 1px solid #d1d5db;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            width: 100%;
+            transition: border-color 0.2s;
+            background-color: #f9fafb;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-blue-light);
+            box-shadow: 0 0 0 2px rgba(92, 107, 192, 0.2);
+            background-color: white;
+        }
+        textarea.form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .print-btn, .save-btn {
+            transition: all 0.2s ease-in-out;
+        }
+        .save-notification {
+            transition: opacity 0.5s, transform 0.5s;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-area, .print-area * {
+                visibility: visible;
+            }
+            .print-area {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 2rem;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .print-header {
+                display: block !important;
+            }
+            .form-input {
+                background-color: white !important;
+                border: 1px solid #ccc !important;
+            }
+            .example-section {
+                 background-color: #f8f8f8 !important;
+                 border-left: 4px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <div id="app" class="container mx-auto p-4 md:p-8 max-w-7xl">
+
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-[var(--color-blue-dark)]">BỘ CÔNG CỤ THỰC HÀNH</h1>
+            <p class="text-xl text-gray-500 mt-2">Lãnh Đạo Như Một Nhà Khai Vấn - Ngày 1</p>
+        </header>
+
+        <!-- Main Tab Navigation -->
+        <nav class="flex flex-wrap justify-center border-b-2 border-gray-200 mb-6 no-print">
+            <button data-tab="hats" class="main-tab active text-lg font-semibold py-3 px-6 border-b-4 border-transparent hover:bg-gray-200 transition">Phân biệt "Các loại Mũ"</button>
+            <button data-tab="listening" class="main-tab text-lg font-semibold py-3 px-6 border-b-4 border-transparent hover:bg-gray-200 transition">Thực hành Lắng nghe</button>
+            <button data-tab="grow" class="main-tab text-lg font-semibold py-3 px-6 border-b-4 border-transparent hover:bg-gray-200 transition">Mô hình GROW</button>
+            <button data-tab="questions" class="main-tab text-lg font-semibold py-3 px-6 border-b-4 border-transparent hover:bg-gray-200 transition">7 Câu hỏi Tinh túy</button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main>
+            <!-- Hats Tool -->
+            <div id="hats" class="tab-content">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex flex-col md:flex-row justify-between md:items-start">
+                        <div>
+                           <h2 class="text-3xl font-bold text-[var(--color-orange)]">Công cụ: Phân biệt "Các loại Mũ" Lãnh đạo</h2>
+                           <p class="text-gray-500 mt-1">Nhận diện đúng vai trò cần thể hiện trong từng tình huống cụ thể.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 no-print mt-4 md:mt-0">
+                            <button class="save-btn px-4 py-2 bg-blue-100 text-[var(--color-blue-dark)] rounded-md hover:bg-blue-200" data-tool="hats"><i class="fas fa-save mr-2"></i>Lưu</button>
+                            <button class="print-btn px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700" data-tool="hats"><i class="fas fa-print mr-2"></i>In</button>
+                        </div>
+                    </div>
+                    <div class="border-b bg-gray-100 rounded-t-md mt-6 no-print">
+                        <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                            <button class="sub-tab active font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="blank" data-tool="hats">Biểu mẫu trống</button>
+                            <button class="sub-tab text-gray-500 font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="example" data-tool="hats">Ví dụ Minh họa</button>
+                        </nav>
+                    </div>
+                    <div id="hats-content" class="pt-6">
+                        <div class="sub-tab-content" data-mode="blank" data-tool="hats">
+                            <form id="hats-form" class="space-y-6">
+                                <div><label class="font-bold text-xl block mb-2">1. Tình huống</label><p class="text-sm text-gray-500 mb-2">Mô tả một tình huống thực tế bạn đã hoặc sẽ gặp phải với nhân viên.</p><textarea name="situation" class="form-input"></textarea></div>
+                                <div class="p-4 border rounded-lg space-y-4">
+                                     <h3 class="font-bold text-xl">2. Phân tích các vai trò</h3>
+                                     <div><label class="block mb-2 text-red-700">Nếu là một TRAINER, bạn sẽ nói/làm gì?</label><textarea name="trainer" class="form-input" placeholder="Tập trung vào 'Làm thế nào?'..."></textarea></div>
+                                     <div><label class="block mb-2 text-blue-800">Nếu là một MENTOR, bạn sẽ nói/làm gì?</label><textarea name="mentor" class="form-input" placeholder="Chia sẻ kinh nghiệm, 'Khi tôi ở vị trí của bạn...'..."></textarea></div>
+                                     <div><label class="block mb-2 text-teal-600">Nếu là một COACH, bạn sẽ nói/làm gì?</label><textarea name="coach" class="form-input" placeholder="Đặt câu hỏi để khơi gợi, 'Bạn nghĩ sao về...?'..."></textarea></div>
+                                </div>
+                                <div><label class="font-bold text-xl block mb-2">3. Lựa chọn tối ưu</label><p class="text-sm text-gray-500 mb-2">Trong tình huống này, vai trò nào là phù hợp và hiệu quả nhất? Tại sao?</p><textarea name="choice" class="form-input"></textarea></div>
+                            </form>
+                        </div>
+                        <div class="sub-tab-content hidden" data-mode="example" data-tool="hats">
+                            <div class="example-section space-y-6 bg-gray-50 p-6 rounded-md border-l-4 border-gray-300">
+                                <div><h3 class="font-bold text-xl">1. Tình huống</h3><p class="mt-2 text-lg">Một nhân viên mới, rất tiềm năng nhưng còn thiếu kinh nghiệm, đang gặp khó khăn trong việc quản lý thời gian và sắp xếp thứ tự ưu tiên công việc, dẫn đến việc hay bị trễ các deadline nhỏ.</p></div>
+                                <div class="p-4 bg-white border rounded-lg space-y-3">
+                                    <h3 class="font-bold text-xl">2. Phân tích các vai trò</h3>
+                                    <div><h4 class="font-bold text-lg text-red-700">TRAINER (Người Đào tạo)</h4><p class="mt-1 text-base">"Ok, để chị chỉ cho em cách dùng ma trận Eisenhower để phân loại công việc. Bước 1, em liệt kê hết các đầu việc ra. Bước 2, em vẽ 4 ô: Khẩn cấp & Quan trọng, Không khẩn cấp & Quan trọng... Bây giờ em thử làm đi nhé."</p></div>
+                                    <div><h4 class="font-bold text-lg text-blue-800">MENTOR (Người Cố vấn)</h4><p class="mt-1 text-base">"Ngày xưa lúc mới vào nghề chị cũng y như em vậy. Chị nhận ra là mình hay bị sa đà vào những việc dễ nhưng không quan trọng. Kinh nghiệm của chị là mỗi sáng hãy dành 15 phút đầu ngày chỉ để lên kế hoạch và xác định 3 việc quan trọng nhất cần làm. Em thử xem."</p></div>
+                                    <div><h4 class="font-bold text-lg text-teal-600">COACH (Nhà Khai vấn)</h4><p class="mt-1 text-base">"Chị nhận thấy em đang nỗ lực để hoàn thành tốt công việc. Điều gì đang là trở ngại lớn nhất cho em trong việc quản lý thời gian? Trong các công việc tuần qua, việc nào lấy của em nhiều năng lượng nhất? Để tuần tới hiệu quả hơn, em nghĩ mình cần bắt đầu từ đâu?"</p></div>
+                                </div>
+                                <div><h3 class="font-bold text-xl">3. Lựa chọn tối ưu</h3><p class="mt-2 text-lg">**Kết hợp Mentor và Coach.** <br>Bắt đầu bằng vai trò **Coach** để nhân viên tự nhận ra vấn đề cốt lõi của họ. Sau khi họ đã có nhận thức, mình có thể chuyển sang vai trò **Mentor** để chia sẻ một vài công cụ hoặc kinh nghiệm cá nhân như một gợi ý để họ lựa chọn, chứ không áp đặt.</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Listening Tool -->
+            <div id="listening" class="tab-content hidden">
+                 <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex flex-col md:flex-row justify-between md:items-start">
+                        <div>
+                           <h2 class="text-3xl font-bold text-[var(--color-orange)]">Công cụ: Thực hành 3 Cấp độ Lắng nghe</h2>
+                           <p class="text-gray-500 mt-1">Luyện tập khả năng lắng nghe để thấu hiểu sâu sắc hơn những gì không được nói ra.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 no-print mt-4 md:mt-0">
+                            <button class="save-btn px-4 py-2 bg-blue-100 text-[var(--color-blue-dark)] rounded-md hover:bg-blue-200" data-tool="listening"><i class="fas fa-save mr-2"></i>Lưu</button>
+                            <button class="print-btn px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700" data-tool="listening"><i class="fas fa-print mr-2"></i>In</button>
+                        </div>
+                    </div>
+                    <div class="border-b bg-gray-100 rounded-t-md mt-6 no-print">
+                        <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                            <button class="sub-tab active font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="blank" data-tool="listening">Biểu mẫu trống</button>
+                            <button class="sub-tab text-gray-500 font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="example" data-tool="listening">Ví dụ Minh họa</button>
+                        </nav>
+                    </div>
+                    <div id="listening-content" class="pt-6">
+                        <div class="sub-tab-content" data-mode="blank" data-tool="listening">
+                             <form id="listening-form" class="space-y-6">
+                                <div><label class="font-bold text-xl block mb-2">1. Lời thoại của nhân viên</label><p class="text-sm text-gray-500 mb-2">Ghi lại một câu nói thực tế bạn nghe được từ nhân viên.</p><textarea name="statement" class="form-input"></textarea></div>
+                                <div class="p-4 border rounded-lg space-y-4">
+                                    <h3 class="font-bold text-xl">2. Các cách phản hồi</h3>
+                                    <div><label class="block mb-2 text-red-700">Phản hồi Cấp 1 (Lắng nghe Nội tại - tập trung vào bản thân):</label><textarea name="level1" class="form-input" placeholder="Bạn nghĩ gì? Ý kiến của bạn? Giải pháp của bạn?..."></textarea></div>
+                                    <div><label class="block mb-2 text-yellow-600">Phản hồi Cấp 2 (Lắng nghe Tập trung - tập trung vào lời nói):</label><textarea name="level2" class="form-input" placeholder="Làm rõ thông tin, hỏi thêm về dữ kiện, 'Ý bạn là sao?'..."></textarea></div>
+                                    <div><label class="block mb-2 text-green-800">Phản hồi Cấp 3 (Lắng nghe Toàn diện - tập trung vào cảm xúc, năng lượng):</label><textarea name="level3" class="form-input" placeholder="Bạn cảm nhận được điều gì? Điều gì ẩn sau lời nói đó?..."></textarea></div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="sub-tab-content hidden" data-mode="example" data-tool="listening">
+                             <div class="example-section space-y-6 bg-gray-50 p-6 rounded-md border-l-4 border-gray-300">
+                                <div><h3 class="font-bold text-xl">1. Lời thoại của nhân viên</h3><p class="mt-2 text-lg italic">"Dự án này khó quá, em không chắc có làm được không."</p></div>
+                                <div class="p-4 bg-white border rounded-lg space-y-3">
+                                    <h3 class="font-bold text-xl">2. Các cách phản hồi</h3>
+                                    <div><h4 class="font-bold text-lg text-red-700">Phản hồi Cấp 1 (Lắng nghe Nội tại)</h4><p class="mt-1 text-base">"Đừng lo, để anh chỉ cho cách làm. Dễ thôi mà, em cứ làm theo cách này là được."<br><em class="text-sm text-gray-600">-> Tập trung vào giải pháp và kinh nghiệm của MÌNH, gạt đi cảm xúc của nhân viên.</em></p></div>
+                                    <div><h4 class="font-bold text-lg text-yellow-600">Phản hồi Cấp 2 (Lắng nghe Tập trung)</h4><p class="mt-1 text-base">"Em có thể nói rõ hơn, 'khó' ở đây cụ thể là ở điểm nào không? Khó về kỹ thuật, về nhân sự hay về thời gian?"<br><em class="text-sm text-gray-600">-> Tập trung vào việc làm rõ TỪ NGỮ, DỮ KIỆN mà nhân viên nói ra.</em></p></div>
+                                    <div><h4 class="font-bold text-lg text-green-800">Phản hồi Cấp 3 (Lắng nghe Toàn diện)</h4><p class="mt-1 text-base">"Chị cảm nhận được một chút lo lắng trong giọng nói của em. Dường như có điều gì đó đang thực sự làm em bận tâm nhất về dự án này?"<br><em class="text-sm text-gray-600">-> Tập trung vào CẢM XÚC (lo lắng) và NĂNG LƯỢNG ẩn sau lời nói.</em></p></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GROW Tool -->
+            <div id="grow" class="tab-content hidden">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                     <div class="flex flex-col md:flex-row justify-between md:items-start">
+                        <div>
+                           <h2 class="text-3xl font-bold text-[var(--color-orange)]">Công cụ: Xây dựng phiên Coach với Mô hình GROW</h2>
+                           <p class="text-gray-500 mt-1">Cấu trúc một cuộc đối thoại khai vấn hiệu quả từ mục tiêu đến hành động.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 no-print mt-4 md:mt-0">
+                            <button class="save-btn px-4 py-2 bg-blue-100 text-[var(--color-blue-dark)] rounded-md hover:bg-blue-200" data-tool="grow"><i class="fas fa-save mr-2"></i>Lưu</button>
+                            <button class="print-btn px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700" data-tool="grow"><i class="fas fa-print mr-2"></i>In</button>
+                        </div>
+                    </div>
+                    <div class="border-b bg-gray-100 rounded-t-md mt-6 no-print">
+                        <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                            <button class="sub-tab active font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="blank" data-tool="grow">Biểu mẫu trống</button>
+                            <button class="sub-tab text-gray-500 font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="example" data-tool="grow">Ví dụ Minh họa</button>
+                        </nav>
+                    </div>
+                    <div id="grow-content" class="pt-6">
+                        <div class="sub-tab-content" data-mode="blank" data-tool="grow">
+                            <form id="grow-form" class="space-y-6">
+                                <div><label class="font-bold text-xl block mb-2">Chủ đề phiên Coach:</label><input type="text" name="topic" class="form-input"></div>
+                                <div class="p-4 border rounded-lg"><label class="font-bold text-xl block mb-2 text-blue-800">G - GOAL (Mục tiêu)</label><p class="text-sm text-gray-500 mb-2">Mục tiêu của buổi trao đổi là gì? Kết quả lý tưởng trông như thế nào?</p><textarea name="goal" class="form-input"></textarea></div>
+                                <div class="p-4 border rounded-lg"><label class="font-bold text-xl block mb-2 text-red-700">R - REALITY (Thực trạng)</label><p class="text-sm text-gray-500 mb-2">Điều gì đang thực sự diễn ra? Ai có liên quan? Bạn đã làm gì rồi?</p><textarea name="reality" class="form-input"></textarea></div>
+                                <div class="p-4 border rounded-lg"><label class="font-bold text-xl block mb-2 text-yellow-600">O - OPTIONS (Lựa chọn)</label><p class="text-sm text-gray-500 mb-2">Nếu mọi thứ đều có thể, bạn sẽ làm gì? Những phương án khác là gì?</p><textarea name="options" class="form-input"></textarea></div>
+                                <div class="p-4 border rounded-lg"><label class="font-bold text-xl block mb-2 text-green-800">W - WILL (Ý chí / Cam kết)</label><p class="text-sm text-gray-500 mb-2">Bạn sẽ làm gì? Khi nào? Bước đầu tiên là gì? Cần hỗ trợ gì?</p><textarea name="will" class="form-input"></textarea></div>
+                            </form>
+                        </div>
+                        <div class="sub-tab-content hidden" data-mode="example" data-tool="grow">
+                            <div class="example-section space-y-6 bg-gray-50 p-6 rounded-md border-l-4 border-gray-300">
+                                <div><h3 class="font-bold text-xl">Chủ đề phiên Coach:</h3><p class="mt-2 text-lg">Nhân viên cảm thấy quá tải và không có thời gian cho các công việc mang tính chiến lược.</p></div>
+                                <div class="p-4 bg-white border rounded-lg">
+                                    <h4 class="font-bold text-xl text-blue-800">G - GOAL (Mục tiêu)</h4>
+                                    <p class="mt-2 text-base">"Kết thúc buổi nói chuyện hôm nay, em muốn tìm ra được ít nhất 1-2 cách để có thể dành ra được 4 tiếng mỗi tuần cho việc lập kế hoạch chiến lược."</p>
+                                </div>
+                                <div class="p-4 bg-white border rounded-lg">
+                                    <h4 class="font-bold text-xl text-red-700">R - REALITY (Thực trạng)</h4>
+                                    <p class="mt-2 text-base">"Hiện tại, 80% thời gian của em là để xử lý các email và yêu cầu đột xuất từ các phòng ban khác. Em đã thử chặn lịch trên calendar nhưng không hiệu quả vì mọi người vẫn gọi điện trực tiếp."</p>
+                                </div>
+                                <div class="p-4 bg-white border rounded-lg">
+                                    <h4 class="font-bold text-xl text-yellow-600">O - OPTIONS (Lựa chọn)</h4>
+                                    <p class="mt-2 text-base">"Em có thể: 1. Quy định khung giờ trả lời email cố định. 2. Trao quyền cho một bạn trong team xử lý các yêu cầu đơn giản. 3. Đề xuất một quy trình làm việc mới với các phòng ban. 4. Làm việc ở một nơi khác (quán cafe, phòng họp trống) trong 2 tiếng mỗi sáng."</p>
+                                </div>
+                                <div class="p-4 bg-white border rounded-lg">
+                                    <h4 class="font-bold text-xl text-green-800">W - WILL (Ý chí / Cam kết)</h4>
+                                    <p class="mt-2 text-base">"Trong tuần tới, em sẽ bắt đầu với Lựa chọn 1 và 2. Cụ thể, em sẽ đặt chế độ trả lời email tự động và ngồi lại với bạn Nam để hướng dẫn bạn ấy cách xử lý một số yêu cầu thường gặp. Em sẽ làm việc này ngay trong chiều nay."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Tool -->
+            <div id="questions" class="tab-content hidden">
+                 <div class="bg-white rounded-lg shadow-lg p-6">
+                    <div class="flex flex-col md:flex-row justify-between md:items-start">
+                        <div>
+                           <h2 class="text-3xl font-bold text-[var(--color-orange)]">Công cụ: Áp dụng 7 Câu hỏi Khai vấn Tinh túy</h2>
+                           <p class="text-gray-500 mt-1">Sử dụng bộ câu hỏi từ "The Coaching Habit" để coach nhanh và hiệu quả.</p>
+                        </div>
+                        <div class="flex items-center space-x-2 no-print mt-4 md:mt-0">
+                            <button class="save-btn px-4 py-2 bg-blue-100 text-[var(--color-blue-dark)] rounded-md hover:bg-blue-200" data-tool="questions"><i class="fas fa-save mr-2"></i>Lưu</button>
+                            <button class="print-btn px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700" data-tool="questions"><i class="fas fa-print mr-2"></i>In</button>
+                        </div>
+                    </div>
+                    <div class="border-b bg-gray-100 rounded-t-md mt-6 no-print">
+                        <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                            <button class="sub-tab active font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="blank" data-tool="questions">Biểu mẫu trống</button>
+                            <button class="sub-tab text-gray-500 font-medium px-6 py-3 border-b-2 border-transparent" data-subtab="example" data-tool="questions">Ví dụ Minh họa</button>
+                        </nav>
+                    </div>
+                    <div id="questions-content" class="pt-6">
+                        <div class="sub-tab-content" data-mode="blank" data-tool="questions">
+                            <div class="md:grid md:grid-cols-2 md:gap-8">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h3 class="font-bold text-xl mb-4">Tham khảo: 7 Câu hỏi Tinh túy</h3>
+                                    <ol class="list-decimal list-inside space-y-2 text-lg">
+                                        <li>"Điều gì đang khiến bạn bận tâm?"</li>
+                                        <li>"Và còn điều gì nữa không?"</li>
+                                        <li>"Thử thách thực sự ở đây là gì?"</li>
+                                        <li>"Bạn thực sự muốn điều gì?"</li>
+                                        <li>"Tôi có thể giúp gì?"</li>
+                                        <li>"Nếu bạn nói 'Có' với điều này, bạn đang nói 'Không' với điều gì?"</li>
+                                        <li>"Điều gì là hữu ích nhất cho bạn (từ cuộc trao đổi này)?"</li>
+                                    </ol>
+                                </div>
+                                <form id="questions-form" class="space-y-6 mt-6 md:mt-0">
+                                    <div><label class="font-bold text-xl block mb-2">1. Tình huống</label><p class="text-sm text-gray-500 mb-2">Mô tả một tình huống bạn muốn thực hành coach nhanh.</p><textarea name="situation" class="form-input"></textarea></div>
+                                    <div><label class="font-bold text-xl block mb-2">2. Câu hỏi bạn chọn</label><p class="text-sm text-gray-500 mb-2">Chọn 1-2 câu hỏi từ danh sách bên cạnh mà bạn thấy phù hợp nhất.</p><textarea name="question_choice" class="form-input"></textarea></div>
+                                    <div><label class="font-bold text-xl block mb-2">3. Kết quả kỳ vọng</label><p class="text-sm text-gray-500 mb-2">Bạn kỳ vọng câu hỏi này sẽ giúp nhân viên nhận ra điều gì?</p><textarea name="outcome" class="form-input"></textarea></div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="sub-tab-content hidden" data-mode="example" data-tool="questions">
+                            <div class="example-section bg-gray-50 p-6 rounded-md border-l-4 border-gray-300">
+                                <div class="md:grid md:grid-cols-2 md:gap-8">
+                                    <div class="bg-white p-4 rounded-lg shadow-sm">
+                                        <h3 class="font-bold text-xl mb-4">Tham khảo: 7 Câu hỏi Tinh túy</h3>
+                                        <ol class="list-decimal list-inside space-y-2 text-lg">
+                                            <li>"Điều gì đang khiến bạn bận tâm?"</li>
+                                            <li class="font-bold text-green-700">"Và còn điều gì nữa không?"</li>
+                                            <li class="font-bold text-green-700">"Thử thách thực sự ở đây là gì?"</li>
+                                            <li>"Bạn thực sự muốn điều gì?"</li>
+                                            <li>"Tôi có thể giúp gì?"</li>
+                                            <li>"Nếu bạn nói 'Có' với điều này, bạn đang nói 'Không' với điều gì?"</li>
+                                            <li>"Điều gì là hữu ích nhất cho bạn?"</li>
+                                        </ol>
+                                    </div>
+                                    <div class="space-y-6 mt-6 md:mt-0">
+                                        <div><h3 class="font-bold text-xl">1. Tình huống</h3><p class="mt-2 text-lg">Nhân viên vào gặp và nói: "Sếp ơi, team A lại gửi yêu cầu hỗ trợ mà không theo quy trình, làm team em bị xáo trộn hết cả công việc."</p></div>
+                                        <div><h3 class="font-bold text-xl">2. Câu hỏi bạn chọn</h3><p class="mt-2 text-lg">Đầu tiên, dùng câu #2: "Và còn điều gì nữa không?" để họ chia sẻ hết. <br>Sau đó, dùng câu #3: "Trong tất cả những điều đó, thử thách thực sự ở đây đối với em là gì?"</p></div>
+                                        <div><h3 class="font-bold text-xl">3. Kết quả kỳ vọng</h3><p class="mt-2 text-lg">Câu #2 giúp họ trút bỏ hết sự bực bội ban đầu. Câu #3 giúp họ chuyển từ việc phàn nàn về team A ("vấn đề bên ngoài") sang nhận diện vấn đề của chính họ ("thử thách bên trong"), có thể là: "Em cảm thấy khó xử khi phải từ chối một team khác" hoặc "Team em chưa có cách hiệu quả để xử lý các yêu cầu đột xuất".</p></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="text-center py-6 text-sm text-gray-500 no-print">
+        Học Liệu cho đào tạo. Bản quyền thuộc Rosie Đào Hạnh Giang CEO Build Talents
+    </footer>
+    
+    <div id="save-notification" class="save-notification fixed bottom-8 right-8 bg-green-600 text-white px-6 py-3 rounded-lg shadow-xl opacity-0 translate-y-4 pointer-events-none no-print">
+        <i class="fas fa-check-circle mr-2"></i>Đã lưu nội dung!
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mainTabs = document.querySelectorAll('.main-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const subTabs = document.querySelectorAll('.sub-tab');
+            const saveBtns = document.querySelectorAll('.save-btn');
+            const printBtns = document.querySelectorAll('.print-btn');
+            const notification = document.getElementById('save-notification');
+
+            const tools = ['hats', 'listening', 'grow', 'questions'];
+
+            function init() {
+                if(mainTabs.length > 0) mainTabs[0].classList.add('active');
+                if(tabContents.length > 0) tabContents[0].classList.remove('hidden');
+
+                mainTabs.forEach(tab => tab.addEventListener('click', switchMainTab));
+                subTabs.forEach(tab => tab.addEventListener('click', switchSubTab));
+                saveBtns.forEach(btn => btn.addEventListener('click', (e) => saveData(e.currentTarget.dataset.tool, true)));
+                printBtns.forEach(btn => btn.addEventListener('click', (e) => printContent(e.currentTarget.dataset.tool)));
+
+                tools.forEach(toolId => {
+                    const form = document.getElementById(`${toolId}-form`);
+                    if(form) {
+                        form.addEventListener('input', (e) => {
+                           if(e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT'){
+                                clearTimeout(e.target.debounce);
+                                e.target.debounce = setTimeout(() => {
+                                    saveData(toolId, false);
+                                }, 500);
+                           }
+                        });
+                    }
+                });
+
+                loadAllData();
+            }
+
+            function switchMainTab(e) {
+                const targetId = e.currentTarget.dataset.tab;
+                mainTabs.forEach(tab => tab.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                tabContents.forEach(content => {
+                    content.id === targetId ? content.classList.remove('hidden') : content.classList.add('hidden');
+                });
+            }
+
+            function switchSubTab(e) {
+                const tool = e.currentTarget.dataset.tool;
+                const subtab = e.currentTarget.dataset.subtab;
+                document.querySelectorAll(`.sub-tab[data-tool="${tool}"]`).forEach(tab => tab.classList.remove('active'));
+                e.currentTarget.classList.add('active');
+                document.querySelectorAll(`.sub-tab-content[data-tool="${tool}"]`).forEach(content => {
+                    content.dataset.mode === subtab ? content.classList.remove('hidden') : content.classList.add('hidden');
+                });
+            }
+            
+            function showSaveNotification() {
+                notification.classList.remove('opacity-0', 'translate-y-4');
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'translate-y-4');
+                }, 2000);
+            }
+
+            function saveData(toolId, showNotif) {
+                const form = document.getElementById(`${toolId}-form`);
+                if (!form) return;
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+                localStorage.setItem(`coachingToolkitDay1_${toolId}`, JSON.stringify(data));
+                if(showNotif){
+                    showSaveNotification();
+                }
+            }
+
+            function loadAllData() {
+                tools.forEach(toolId => {
+                    try {
+                        const savedData = localStorage.getItem(`coachingToolkitDay1_${toolId}`);
+                        if (savedData) {
+                            const data = JSON.parse(savedData);
+                            const form = document.getElementById(`${toolId}-form`);
+                            if (form) {
+                                for (const key in data) {
+                                    if (Object.prototype.hasOwnProperty.call(data, key) && form.elements[key]) {
+                                        form.elements[key].value = data[key];
+                                    }
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.error(`Could not load data for ${toolId}:`, error);
+                    }
+                });
+            }
+
+            function printContent(toolId) {
+                const activeSubTab = document.querySelector(`.sub-tab[data-tool="${toolId}"].active`);
+                const mode = activeSubTab.dataset.subtab;
+                const contentToPrint = document.querySelector(`.sub-tab-content[data-tool="${toolId}"][data-mode="${mode}"]`);
+                
+                const printWrapper = document.createElement('div');
+                printWrapper.className = 'print-area';
+
+                const header = document.querySelector(`div[id="${toolId}"] h2`).cloneNode(true);
+                header.className += ' print-header';
+                
+                const description = document.querySelector(`div[id="${toolId}"] p`).cloneNode(true);
+                description.className += ' text-gray-600 mb-6';
+
+                printWrapper.appendChild(header);
+                printWrapper.appendChild(description);
+                printWrapper.appendChild(contentToPrint.cloneNode(true));
+                
+                document.body.appendChild(printWrapper);
+                window.print();
+                document.body.removeChild(printWrapper);
+            }
+
+            init();
+        });
+    </script>
+</body>
+</html>
